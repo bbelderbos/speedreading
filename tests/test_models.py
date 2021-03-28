@@ -1,10 +1,9 @@
 from pydantic.error_wrappers import ValidationError
 import pytest
 
-from speedreading.models import (User,
-                                 PydanticUser,
-                                 Reading,
-                                 PydanticUserWithReadings)
+from speedreading.models import User, Reading
+from speedreading.schemas import (PydanticUser,
+                                  PydanticUserWithReadings)
 
 
 def test_orm_and_pydantic_models(session, user):

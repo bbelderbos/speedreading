@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from pydantic_sqlalchemy import sqlalchemy_to_pydantic
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
+from sqlalchemy import (Boolean, Column, ForeignKey,
+                        Integer, String, DateTime)
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
@@ -44,15 +44,3 @@ class Reading(Base):
     text = relationship("Text", back_populates="readings")
     user_id = Column(Integer, ForeignKey("users.id"))
     user = relationship("User", back_populates="readings")
-
-
-# this is cool:
-# https://github.com/tiangolo/pydantic-sqlalchemy
-
-PydanticUser = sqlalchemy_to_pydantic(User)
-PydanticText = sqlalchemy_to_pydantic(Text)
-PydanticReading = sqlalchemy_to_pydantic(Reading)
-
-
-class PydanticUserWithReadings(PydanticUser):
-    readings: list[PydanticReading] = []
