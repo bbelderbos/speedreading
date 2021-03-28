@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "speedreading-api"
+version = "0.1.0"
+description = ""
+authors = ["Bob Belderbos <bobbelderbos@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+uvicorn = "^0.13.4"
+fastapi = "^0.63.0"
+SQLAlchemy = "^1.4.3"
+pydantic-sqlalchemy = "^0.0.8"
+psycopg2 = "^2.8.6"
+
+[tool.poetry.dev-dependencies]
+pytest = "^4.6"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
