@@ -1,3 +1,6 @@
+from pydantic.error_wrappers import ValidationError
+import pytest
+
 from speedreading.models import (User,
                                  PydanticUser,
                                  Reading,
@@ -25,3 +28,22 @@ def test_orm_and_pydantic_models(session, user):
     first, _, last = data['readings']
     assert first["words_read"] == 225
     assert last["words_read"] == 339
+
+
+@pytest.mark.parametrize("kwargs, exception_error", [
+    (dict(email=1),
+     ('1 validation error for User\nid\n  '
+      'field required (type=value_error.missing)')),
+    (dict(id=2, email=(1, 2)),
+     ('1 validation error for User\nemail\n  '
+      'str type expected (type=type_error.str)')),
+    (dict(id=2, email='bob@gmail.com', is_active='s'),
+     ('1 validation error for User\nis_active\n  '
+      'value could not be parsed to a boolean '
+      '(type=type_error.bool)')),
+])
+def test_pydantic_model_validation(kwargs, exception_error):
+    """It really is a Pydantic model I got for free!"""
+    with pytest.raises(ValidationError) as exc:
+        PydanticUser(**kwargs)
+    assert str(exc.value) == exception_error
