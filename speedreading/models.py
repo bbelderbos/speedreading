@@ -20,6 +20,7 @@ class User(Base):
 
 
 class Text(Base):
+    """Store some book texts for user for speed reading"""
     __tablename__ = "texts"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -31,6 +32,7 @@ class Text(Base):
 
 
 class Reading(Base):
+    """Measure words user can read in a time span"""
     __tablename__ = "readings"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -44,6 +46,9 @@ class Reading(Base):
     user = relationship("User", back_populates="readings")
 
 
+# this is cool:
+# https://github.com/tiangolo/pydantic-sqlalchemy
+
 PydanticUser = sqlalchemy_to_pydantic(User)
 PydanticText = sqlalchemy_to_pydantic(Text)
 PydanticReading = sqlalchemy_to_pydantic(Reading)
@@ -51,4 +56,3 @@ PydanticReading = sqlalchemy_to_pydantic(Reading)
 
 class PydanticUserWithReadings(PydanticUser):
     readings: list[PydanticReading] = []
-
