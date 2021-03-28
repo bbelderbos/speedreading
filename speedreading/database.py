@@ -1,10 +1,12 @@
+import os
+
 from sqlalchemy import create_engine as _create_engine
 from sqlalchemy.orm import sessionmaker
 
-SQLALCHEMY_DATABASE_URL = "postgres://postgres:password@0.0.0.0:5435/speedreading"
+DB_URL = os.getenv('DB_URL')
 
 
-def create_engine(db_url=SQLALCHEMY_DATABASE_URL,
+def create_engine(db_url=DB_URL,
                   echo=False):
     return _create_engine(
         db_url,

@@ -1,4 +1,5 @@
 from datetime import datetime
+import os
 
 import pytest
 
@@ -6,12 +7,12 @@ from speedreading.database import (create_engine,
                                    create_session)
 from speedreading.models import Base, User, Reading
 
-IN_MEM_DB = 'sqlite://'
+TEST_DB_URL = os.getenv('TEST_DB_URL')
 
 
 @pytest.fixture(scope="module")
 def engine():
-    engine = create_engine(IN_MEM_DB, echo=True)
+    engine = create_engine(TEST_DB_URL, echo=True)
     Base.metadata.create_all(bind=engine)
     yield engine
     Base.metadata.drop_all(bind=engine)
