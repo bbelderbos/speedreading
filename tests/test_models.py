@@ -4,7 +4,7 @@ from speedreading.models import (User,
                                  PydanticUserWithReadings)
 
 
-def test_orm_and_pydantic_user_and_readings(session, user):
+def test_orm_and_pydantic_models(session, user):
     assert session.query(User).count() == 1
     assert session.query(Reading).count() == 3
     first_user = session.query(User).first()
